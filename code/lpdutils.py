@@ -2830,6 +2830,23 @@ def __copyDir__(copyFromDirectoryPath, copyToDirectoryPath):
 
 
 def view_images(inputDirectoryPath, height, width):
+    """
+    View images in the provided size from a given directory
+
+    Parameters
+    ----------
+    inputDirectoryPath : String
+        Path to the directory from where the images will be loaded.
+
+    height : int
+        Resized height of the viewed images.
+
+    width:int
+        Resized width of the viewed images.
+
+    ----------
+    """
+
     heightOneThird = int(height * (1 / 3))
     heightTwoThird = int(height * (2 / 3))
     widthOneThird = int(width * (1 / 3))
