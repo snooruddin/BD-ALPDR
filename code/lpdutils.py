@@ -170,7 +170,7 @@ def single_region_extract(inputDirectoryPath, outputDirectoryPath, prefix="crop_
 
 
 def single_region_extract_with_replace(inputDirectoryPath, outputDirectoryPath1, outputDirectoryPath2, prefix="crop_",
-                                   csvFileName="sre_output.csv"):
+                                   csvFileName="srer_output.csv"):
     """
     Function that:
         extracts image regions using supervision
@@ -340,7 +340,7 @@ def single_region_extract_with_replace(inputDirectoryPath, outputDirectoryPath1,
 
 
 def multi_region_extract_with_replace(inputDirectoryPath, outputDirectoryPath1, outputDirectoryPath2, prefix="crop_",
-                                  csvFileName="mre_output.csv"):
+                                  csvFileName="mrer_output.csv"):
     """
     Function that:
         extracts image regions using supervision
@@ -2828,8 +2828,33 @@ def __copyDir__(copyFromDirectoryPath, copyToDirectoryPath):
 
         copy(fullFilePath, copyToDirectoryPath)
 
-# single_region_extract("./train/", "./", "baby.csv")
-# getGLCMFeatures("./", label=1)
-# train_test_image_split("./", trainDirectoryName="train", testDirectoryName="test")
-# drawProbableLpRegions("./", "./", stepSize=8, confidence=0.80)
-# __getShapes__("./")
+
+def view_images(inputDirectoryPath, height, width):
+    heightOneThird = int(height * (1 / 3))
+    heightTwoThird = int(height * (2 / 3))
+    widthOneThird = int(width * (1 / 3))
+    widthTwoThird = int(width * (2 / 3))
+
+    fileNamess = os.listdir(inputDirectoryPath)
+
+    fileNames = list(filter(lambda x: x.endswith('.jpg') or x.endswith(".JPG"), fileNamess))
+    fileNames.sort(key=len)
+
+    for file in fileNames:
+        fullFilePath = inputDirectoryPath + file
+
+        img = cv.imread(fullFilePath)
+
+        img = cv.line(img, (0, heightOneThird), (width, heightOneThird), (0, 0, 255), 2)
+        img = cv.line(img, (0, heightTwoThird), (width, heightTwoThird), (0, 255, 0), 2)
+
+        img = cv.line(img, (widthOneThird, 0), (widthOneThird, height), (0, 0, 255), 2)
+        img = cv.line(img, (widthTwoThird, 0), (widthTwoThird, height), (0, 255, 0), 2)
+
+        cv.imshow(file, img)
+        cv.waitKey(0)
+        cv.destroyWindow(file)
+
+    cv.destroyAllWindows()
+    cv.waitKey(1)
+
